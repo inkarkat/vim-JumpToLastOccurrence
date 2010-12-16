@@ -3,9 +3,12 @@ let g:verifyDefaultPositionCmd = '0fO'
 
 function! InsertAndJump( positionCmd, testCmd)
     call append(line('$'), g:verifyText)
-    normal! G0
+    " Do not use the very last line for testing, this is a special case. 
+    call append(line('$'), '*** temporary last line')
+    normal! Gk0
     execute 'normal!' (empty(a:positionCmd) ? g:verifyDefaultPositionCmd : a:positionCmd)
     execute 'normal' a:testCmd
+    $delete _
 endfunction
 function! VerifyModes( positionCmd, testCmd, description )
     call append(line('$'), "")
