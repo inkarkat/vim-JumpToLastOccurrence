@@ -48,7 +48,21 @@ function! s:FindLastOccurrence( count, char, isBackward )
 	endif
     endif
 
-    execute 'normal!' (a:isBackward ? '0'.a:count.'f' : '$'.a:count.'F') . a:char
+    if a:count == 1
+	execute 'normal!' (a:isBackward ? '0'.a:count.'f' : '$'.a:count.'F') . a:char
+    else
+	" Go to end and try to reach <count>'th occurrence. 
+	execute 'normal!' (a:isBackward ? '0' : '$')
+	let l:lastInLinePosition = getpos('.')
+	execute 'silent! normal!' a:count . (a:isBackward ? 'f' : 'F') . a:char
+	if getpos('.') == l:lastInLinePosition
+	    " There are no <count> occurrences. 
+	    call setpos('.', l:initialPosition)
+	    return 0
+	else
+	    return 1
+	endif
+    endif
     return 1
 endfunction
 function! s:JumpToLastOccurrence( mode, isBefore, isBackward )
