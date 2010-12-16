@@ -16,8 +16,7 @@ if exists('g:loaded_JumpToLastOccurrence') || (v:version < 700)
 endif
 let g:loaded_JumpToLastOccurrence = 1
 
-function! s:FindLastOccurrence( char, isBackward )
-    " TODO: v:count
+function! s:FindLastOccurrence( count, char, isBackward )
     let l:initialPosition = getpos('.')
     execute 'normal!' (a:isBackward ? 'F' : 'f') . a:char
     if getpos('.') == l:initialPosition
@@ -31,15 +30,31 @@ function! s:FindLastOccurrence( char, isBackward )
     if getpos('.') != l:beforeLastInLinePosition
 	" Found last occurrence at the end of the line. 
 
-	" Revert jump direction and go back to last occurrence. 
-	execute 'silent! normal!' (a:isBackward ? 'f' : 'F') . a:char . (a:isBackward ? '0' : '$')
-	return 1
+	if a:count == 1
+	    " Revert jump direction and go back to last occurrence. 
+	    execute 'silent! normal!' (a:isBackward ? 'f' : 'F') . a:char . (a:isBackward ? '0' : '$')
+	    return 1
+	else
+	    " Revert jump direction and try to reach (<count> - 1)'th occurrence. 
+	    let l:lastInLinePosition = getpos('.')
+	    execute 'silent! normal!' (a:count - 1) . (a:isBackward ? 'f' : 'F') . a:char
+	    if getpos('.') == l:lastInLinePosition
+		" There are no <count> occurrences. 
+		call setpos('.', l:initialPosition)
+		return 0
+	    else
+		return 1
+	    endif
+	endif
     endif
 
-    execute 'normal!' (a:isBackward ? '0f' : '$F') . a:char
+    execute 'normal!' (a:isBackward ? '0'.a:count.'f' : '$'.a:count.'F') . a:char
     return 1
 endfunction
 function! s:JumpToLastOccurrence( mode, isBefore, isBackward )
+    let l:count = (v:count1 == 0 ? g:count : v:count1)
+    "let l:count = v:count1
+
     let l:char = nr2char(getchar())
     " TODO: Handle digraphs via <C-K>. 
     if l:char ==# "\<Esc>"
@@ -48,35 +63,36 @@ function! s:JumpToLastOccurrence( mode, isBefore, isBackward )
 
     if a:mode ==# 'v'
 	normal! gv
-    elseif a:mode ==# 'o'
-	if a:isBackward && &selection !=# 'exclusive'
-	    " Visual mode with inclusive selections includes the character under
-	    " the cursor, which shouldn't be included in a backwards motion. 
-	    normal! h
-	endif
-	normal! v
     endif
-    if s:FindLastOccurrence(l:char, a:isBackward)
+    if s:FindLastOccurrence(l:count, l:char, a:isBackward)
 	if a:isBackward
 	    if a:isBefore
 		normal! l
 	    endif
 	else
-	    if a:mode ==# 'n' || &selection !=# 'exclusive'
+	    if a:mode ==# 'n' || (a:mode ==# 'v' && &selection !=# 'exclusive')
 		if a:isBefore
 		    normal! h
 		endif
 	    else
 		if ! a:isBefore
+		    " In operator-pending mode, the 'l' motion only works
+		    " properly at the end of the line (i.e. when the moved-over
+		    " character is at the end of the line) when the 'l' motion
+		    " is allowed to move over to the next line. Thus, the 'l'
+		    " motion is added temporarily to the global 'whichwrap'
+		    " setting. Without this, the motion would leave out the last
+		    " character in the line. I've also experimented with
+		    " temporarily setting "set virtualedit=onemore" , but that
+		    " didn't work. The only place where this does not work is at
+		    " the very end of the buffer. 
+		    let l:save_ww = &whichwrap
+		    set whichwrap+=l
 		    normal! l
+		    let &whichwrap = l:save_ww 
 		endif
 	    endif
 	endif
-    elseif a:mode ==# 'o'
-	" Cancel the visual mode used to specify the motion. Otherwise, in an
-	" inclusive selection the character under the cursor would be operated
-	" on. 
-	execute "normal! \<Esc>"
     endif
 
 endfunction
