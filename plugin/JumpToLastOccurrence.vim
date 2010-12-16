@@ -61,7 +61,19 @@ function! s:JumpToLastOccurrence( mode, isBefore, isBackward )
 		endif
 	    else
 		if ! a:isBefore
+		    " In operator-pending mode, the 'l' motion only works
+		    " properly at the end of the line (i.e. when the moved-over
+		    " character is at the end of the line) when the 'l' motion
+		    " is allowed to move over to the next line. Thus, the 'l'
+		    " motion is added temporarily to the global 'whichwrap'
+		    " setting. Without this, the motion would leave out the last
+		    " character in the line. I've also experimented with
+		    " temporarily setting "set virtualedit=onemore" , but that
+		    " didn't work. 
+		    let l:save_ww = &whichwrap
+		    set whichwrap+=l
 		    normal! l
+		    let &whichwrap = l:save_ww 
 		endif
 	    endif
 	endif
