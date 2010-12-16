@@ -10,8 +10,20 @@ endfunction
 function! VerifyModes( positionCmd, testCmd, description )
     call append(line('$'), "")
     call append(line('$'), '> ' . a:description)
+
+    " (modes: normal, operator, visual/inclusive, visual/exclusive)
     for [l:pre, l:post] in [['', 'r|'], ['c', "INSERTED\<Esc>"], ['v', 'rX']]
-	call InsertAndJump(a:positionCmd, l:pre . a:testCmd . l:post)
+	" Test both selection settings in visual mode. 
+	if l:pre ==# 'v'
+	    let l:save_selection = &selection
+	    set selection=inclusive
+	    call InsertAndJump(a:positionCmd, l:pre . a:testCmd . l:post)
+	    set selection=exclusive
+	    call InsertAndJump(a:positionCmd, l:pre . a:testCmd . l:post)
+	    let &selection = l:save_selection
+	else
+	    call InsertAndJump(a:positionCmd, l:pre . a:testCmd . l:post)
+	endif
     endfor
 endfunction
 function! VerifyJump( positionCmd, testCmd, description)
