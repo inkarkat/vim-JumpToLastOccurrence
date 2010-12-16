@@ -19,24 +19,24 @@ let g:loaded_JumpToLastOccurrence = 1
 function! s:FindLastOccurrence( char, isBackward )
     " TODO: v:count
     let l:initialPosition = getpos('.')
-    execute 'normal! f' . a:char
+    execute 'normal!' (a:isBackward ? 'F' : 'f') . a:char
     if getpos('.') == l:initialPosition
 	" No more occurrence of the char in this line. 
 	return 0
     endif
 
-    execute 'normal! $h'
+    execute 'normal!' (a:isBackward ? '0l' : '$h')
     let l:beforeLastInLinePosition = getpos('.')
-    execute 'silent! normal! f' . a:char
+    execute 'silent! normal!' (a:isBackward ? 'F' : 'f') . a:char
     if getpos('.') != l:beforeLastInLinePosition
 	" Found last occurrence at the end of the line. 
 
 	" Revert jump direction and go back to last occurrence. 
-	execute 'silent! normal! F' . a:char . '$'
+	execute 'silent! normal!' (a:isBackward ? 'f' : 'F') . a:char . (a:isBackward ? '0' : '$')
 	return 1
     endif
 
-    execute 'normal! $F' . a:char
+    execute 'normal!' (a:isBackward ? '0f' : '$F') . a:char
     return 1
 endfunction
 function! s:JumpToLastOccurrence( mode, isBefore, isBackward )
@@ -50,13 +50,19 @@ function! s:JumpToLastOccurrence( mode, isBefore, isBackward )
 	normal! gv
     endif
     if s:FindLastOccurrence(l:char, a:isBackward)
-	if a:mode ==# 'n' || (a:mode ==# 'v' && &selection !=# 'exclusive')
+	if a:isBackward
 	    if a:isBefore
-		normal! h
+		normal! l
 	    endif
 	else
-	    if ! a:isBefore
-		normal! l
+	    if a:mode ==# 'n' || (a:mode ==# 'v' && &selection !=# 'exclusive')
+		if a:isBefore
+		    normal! h
+		endif
+	    else
+		if ! a:isBefore
+		    normal! l
+		endif
 	    endif
 	endif
     endif
