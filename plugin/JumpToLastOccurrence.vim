@@ -16,8 +16,18 @@ if exists('g:loaded_JumpToLastOccurrence') || (v:version < 700)
 endif
 let g:loaded_JumpToLastOccurrence = 1
 
+function! s:GoToOccurrenceFromEnd( count, char, isBackward, initialPosition )
+    let l:lastInLinePosition = getpos('.')
+    execute 'silent! normal!' a:count . (a:isBackward ? 'f' : 'F') . a:char
+    if getpos('.') == l:lastInLinePosition
+	" There are no <count> occurrences. 
+	call setpos('.', a:initialPosition)
+	return 0
+    else
+	return 1
+    endif
+endfunction
 function! s:FindLastOccurrence( count, char, isBackward )
-    let l:count = a:count
     let l:initialPosition = getpos('.')
     execute 'normal!' (a:isBackward ? 'F' : 'f') . a:char
     if getpos('.') == l:initialPosition
@@ -36,7 +46,8 @@ function! s:FindLastOccurrence( count, char, isBackward )
 	    execute 'silent! normal!' (a:isBackward ? 'f' : 'F') . a:char . (a:isBackward ? '0' : '$')
 	    return 1
 	else
-	    let l:count -= 1
+	    " Revert jump direction and try to reach (<count> - 1)'th occurrence. 
+	    return s:GoToOccurrenceFromEnd(a:count - 1, a:char, a:isBackward, l:initialPosition)
 	endif
     endif
 
@@ -45,15 +56,7 @@ function! s:FindLastOccurrence( count, char, isBackward )
     else
 	" Go to end and try to reach <count>'th occurrence. 
 	execute 'normal!' (a:isBackward ? '0' : '$')
-	let l:lastInLinePosition = getpos('.')
-	execute 'silent! normal!' l:count . (a:isBackward ? 'f' : 'F') . a:char
-	if getpos('.') == l:lastInLinePosition
-	    " There are no <count> occurrences. 
-	    call setpos('.', l:initialPosition)
-	    return 0
-	else
-	    return 1
-	endif
+	return s:GoToOccurrenceFromEnd(a:count, a:char, a:isBackward, l:initialPosition)
     endif
     return 1
 endfunction
@@ -100,7 +103,7 @@ function! s:JumpToLastOccurrence( mode, isBefore, isBackward )
 	    endif
 	endif
     endif
-
+    " TODO: omap isn't canceled. 
 endfunction
 
 nnoremap <silent> ,f :<C-u>call <SID>JumpToLastOccurrence('n', 0, 0)<CR>
