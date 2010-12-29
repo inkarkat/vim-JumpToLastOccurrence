@@ -1,4 +1,4 @@
-" JumpToLastOccurrence.vim: summary
+" JumpToLastOccurrence.vim: f{char} motions that count from the end of the line. 
 "
 " DEPENDENCIES:
 "
@@ -8,6 +8,7 @@
 " Maintainer:	Ingo Karkat <ingo@karkat.de>
 "
 " REVISION	DATE		REMARKS 
+"   1.00.002	29-Dec-2010	Reviewed for release. 
 "	001	11-Dec-2010	file creation
 
 " Avoid installing twice or when in unsupported Vim version. 
@@ -61,8 +62,8 @@ function! s:FindLastOccurrence( count, char, isBackward )
     return 1
 endfunction
 function! s:JumpToLastOccurrence( mode, isBefore, isBackward )
-    let l:count = (v:count1 == 0 ? g:count : v:count1)
-    "let l:count = v:count1
+    let l:count = v:count1
+"    let l:count = (v:count1 == 0 ? g:count : v:count1)	" Uncomment this line to enable automated testing with <count>. 
 
     let l:char = nr2char(getchar())
     " TODO: Handle digraphs via <C-K>. 
@@ -103,7 +104,7 @@ function! s:JumpToLastOccurrence( mode, isBefore, isBackward )
 	    endif
 	endif
     endif
-    " TODO: omap isn't canceled. 
+    " XXX: omap isn't canceled. 
 endfunction
 
 nnoremap <silent> ,f :<C-u>call <SID>JumpToLastOccurrence('n', 0, 0)<CR>
