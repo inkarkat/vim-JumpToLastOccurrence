@@ -24,6 +24,12 @@ let g:loaded_JumpToLastOccurrence = 1
 let s:save_cpo = &cpo
 set cpo&vim
 
+"- configuration --------------------------------------------------------------
+if ! exists('g:JumpToLastOccurrence_Leader')
+    let g:JumpToLastOccurrence_Leader = ','
+endif
+
+
 "- mappings -------------------------------------------------------------------
 function! s:CreateMotionMappings()
     for l:mode in ['n', 'o', 'v']
@@ -37,7 +43,8 @@ function! s:CreateMotionMappings()
 	    \	(l:motion =~# '\u')
 	    \)
 	    if ! hasmapto(l:targetMapping, l:mode)
-		execute (l:mode ==# 'v' ? 'x' : l:mode) . 'map <silent> ,' . l:motion . ' ' . l:targetMapping 
+		let l:mapping = g:JumpToLastOccurrence_Leader . l:motion
+		execute (l:mode ==# 'v' && l:mapping =~# '^\p' ? 'x' : l:mode) . 'map <silent> ' . l:mapping . ' ' . l:targetMapping 
 	    endif
 	endfor
     endfor
