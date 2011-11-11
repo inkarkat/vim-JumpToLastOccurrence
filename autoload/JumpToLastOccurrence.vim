@@ -57,7 +57,6 @@ function! s:FindLastOccurrence( count, char, isBackward )
 endfunction
 function! JumpToLastOccurrence#Jump( mode, isBefore, isBackward )
     let l:count = v:count1
-"    let l:count = (v:count1 == 0 ? g:count : v:count1)	" Uncomment this line to enable automated testing with <count>. 
 
     let l:char = nr2char(getchar())
     " TODO: Handle digraphs via <C-K>. 
