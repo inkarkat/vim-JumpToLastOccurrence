@@ -61,7 +61,7 @@ function! JumpToLastOccurrence#Jump( mode, isBefore, isBackward )
     let l:char = nr2char(getchar())
     " TODO: Handle digraphs via <C-K>. 
     if l:char ==# "\<Esc>"
-	return 
+	return
     endif
 
     if a:mode ==# 'v'
@@ -92,7 +92,7 @@ function! JumpToLastOccurrence#Jump( mode, isBefore, isBackward )
 		    let l:save_ww = &whichwrap
 		    set whichwrap+=l
 		    normal! l
-		    let &whichwrap = l:save_ww 
+		    let &whichwrap = l:save_ww
 		endif
 	    endif
 	endif
