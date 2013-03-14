@@ -51,10 +51,10 @@ USAGE						  *JumpToLastOccurrence-usage*
 INSTALLATION				   *JumpToLastOccurrence-installation*
 
 This script is packaged as a |vimball|. If you have the "gunzip" decompressor
-in your PATH, simply edit the *.vba.gz package in Vim; otherwise, decompress
+in your PATH, simply edit the *.vmb.gz package in Vim; otherwise, decompress
 the archive first, e.g. using WinZip. Inside Vim, install by sourcing the
 vimball or via the |:UseVimball| command. >
-    vim JumpToLastOccurrence.vba.gz
+    vim JumpToLastOccurrence*.vmb.gz
     :so %
 To uninstall, use the |:RmVimball| command.
 
@@ -110,6 +110,9 @@ IDEAS						  *JumpToLastOccurrence-ideas*
 
 ==============================================================================
 HISTORY						*JumpToLastOccurrence-history*
+
+1.11	15-Sep-2012
+Also handle move to the buffer's very last character in operator-pending mode.
 
 1.10	30-Dec-2010
 - Moved functions from plugin to separate autoload script.
