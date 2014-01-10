@@ -1,13 +1,15 @@
 " JumpToLastOccurrence.vim: f{char} motions that count from the end of the line.
 "
 " DEPENDENCIES:
+"   - ingo/query/get.vim autoload script
 "
-" Copyright: (C) 2010-2012 Ingo Karkat
+" Copyright: (C) 2010-2014 Ingo Karkat
 "   The VIM LICENSE applies to this script; see ':help copyright'.
 "
 " Maintainer:	Ingo Karkat <ingo@karkat.de>
 "
 " REVISION	DATE		REMARKS
+"   1.12.003	02-Jan-2014	Use ingo#query#get#Char().
 "   1.11.002	15-Sep-2012	Also handle move to the buffer's very last
 "				character in operator-pending mode by
 "				temporarily setting 'virtualedit' to "onemore".
@@ -61,11 +63,8 @@ endfunction
 function! JumpToLastOccurrence#Jump( mode, isBefore, isBackward )
     let l:count = v:count1
 
-    let l:char = nr2char(getchar())
-    " TODO: Handle digraphs via <C-K>.
-    if l:char ==# "\<Esc>"
-	return
-    endif
+    let l:char = ingo#query#get#Char()
+    if empty(l:char) | return | endif
 
     if a:mode ==# 'v'
 	normal! gv
