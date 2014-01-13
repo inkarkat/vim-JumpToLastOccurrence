@@ -1,6 +1,7 @@
 " JumpToLastOccurrence.vim: f{char} motions that count from the end of the line.
 "
 " DEPENDENCIES:
+"   - ingo/motion/helper.vim autoload script
 "   - ingo/query/get.vim autoload script
 "
 " Copyright: (C) 2010-2014 Ingo Karkat
@@ -9,6 +10,9 @@
 " Maintainer:	Ingo Karkat <ingo@karkat.de>
 "
 " REVISION	DATE		REMARKS
+"   1.12.004	11-Jan-2014	Factor out special treatment for visual and
+"				operator-pending motions to
+"				ingo#motion#helper#AdditionalMovement().
 "   1.12.003	02-Jan-2014	Use ingo#query#get#Char().
 "   1.11.002	15-Sep-2012	Also handle move to the buffer's very last
 "				character in operator-pending mode by
@@ -81,27 +85,7 @@ function! JumpToLastOccurrence#Jump( mode, isBefore, isBackward )
 		endif
 	    else
 		if ! a:isBefore
-		    " In operator-pending mode, the 'l' motion only works properly
-		    " at the end of the line (i.e. when the moved-over "word" is at
-		    " the end of the line) when the 'l' motion is allowed to move
-		    " over to the next line. Thus, the 'l' motion is added
-		    " temporarily to the global 'whichwrap' setting. Without this,
-		    " the motion would leave out the last character in the line.
-		    let l:save_ww = &whichwrap
-		    set whichwrap+=l
-		    if line('.') == line('$') && &virtualedit !=# 'onemore' && &virtualedit !=# 'all'
-			" For the last line in the buffer, that still doesn't work,
-			" unless we can do virtual editing.
-			let l:save_ve = &virtualedit
-			set virtualedit=onemore
-			normal! l
-			augroup TempVirtualEdit
-			    execute 'autocmd! CursorMoved * set virtualedit=' . l:save_ve . ' | autocmd! TempVirtualEdit'
-			augroup END
-		    else
-			normal! l
-		    endif
-		    let &whichwrap = l:save_ww
+		    call ingo#motion#helper#AdditionalMovement()
 		endif
 	    endif
 	endif
