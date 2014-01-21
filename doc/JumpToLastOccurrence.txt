@@ -63,6 +63,7 @@ DEPENDENCIES				   *JumpToLastOccurrence-dependencies*
 - Requires Vim 7.0 or higher.
 - Requires the |ingo-library.vim| plugin (vimscript #4433), version 1.016 or
   higher.
+- repeat.vim (vimscript #2136) plugin, version 1.1 or higher (optional)
 
 ==============================================================================
 CONFIGURATION				  *JumpToLastOccurrence-configuration*
@@ -113,7 +114,9 @@ IDEAS						  *JumpToLastOccurrence-ideas*
 ==============================================================================
 HISTORY						*JumpToLastOccurrence-history*
 
-1.12	RELEASEME
+1.20	RELEASEME
+- ENH: Implement repeat of operator-pending mapping without re-querying the
+  {char}. This requires the repeat.vim plugin, version 1.1 or higher.
 - Add dependency to ingo-library (vimscript #4433).
 
 1.11	15-Sep-2012
