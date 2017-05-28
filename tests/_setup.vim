@@ -1,0 +1,1 @@
+runtime plugin/JumpToLastOccurrence.vim
