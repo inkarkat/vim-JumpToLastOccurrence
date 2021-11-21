@@ -1,0 +1,7 @@
+
+
+> mapping in visual mode
+nnoremap <silent> ,f :<C-u>call <SID>JumpToLast|XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX)<CR>
+
+> mapping in select mode
+nnoremap <silent> ,f :<C-u>call <SID>JumpToLast,f0rXr|ccurrence(<SID>Jumper('x', 0, "foo"), 'n', 0, 0)<CR>
