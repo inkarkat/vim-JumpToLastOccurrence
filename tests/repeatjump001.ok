@@ -1,0 +1,13 @@
+
+
+> repeat f0
+nnoremap <silent> ,f :<C-u>call <SID>JumpToLastOccurrence(<SID>Jumper('x', 0, "foo"), 'n', |, 0)<CR>
+
+> repeat t0
+nnoremap <silent> ,f :<C-u>call <SID>JumpToLastOccurrence(<SID>Jumper('x', 0, "foo"), 'n', |, 0)<CR>
+
+> repeat Ft
+nnoremap <silent> ,f :<C-u>call <SID>JumpToLas|Occurrence(<SID>Jumper('x', 0, "foo"), 'n', 0, 0)<CR>
+
+> repeat Tt
+nnoremap <silent> ,f :<C-u>call <SID>JumpToLas|Occurrence(<SID>Jumper('x', 0, "foo"), 'n', 0, 0)<CR>
