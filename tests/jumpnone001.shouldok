@@ -1,0 +1,25 @@
+
+
+> forward to last Z
+nnoremap <silent> ,f :<C-u>call <SID>JumpToLast|ccurrence(<SID>Jumper('x', 0, "foo"), 'n', 0, 0)<CR>
+nnoremap <silent> ,f :<C-u>call <SID>JumpToLastOccurrence(<SID>Jumper('x', 0, "foo"), 'n', 0, 0)<CR>
+nnoremap <silent> ,f :<C-u>call <SID>JumpToLastXccurrence(<SID>Jumper('x', 0, "foo"), 'n', 0, 0)<CR>
+nnoremap <silent> ,f :<C-u>call <SID>JumpToLastXccurrence(<SID>Jumper('x', 0, "foo"), 'n', 0, 0)<CR>
+
+> forward until last Z
+nnoremap <silent> ,f :<C-u>call <SID>JumpToLast|ccurrence(<SID>Jumper('x', 0, "foo"), 'n', 0, 0)<CR>
+nnoremap <silent> ,f :<C-u>call <SID>JumpToLastOccurrence(<SID>Jumper('x', 0, "foo"), 'n', 0, 0)<CR>
+nnoremap <silent> ,f :<C-u>call <SID>JumpToLastXccurrence(<SID>Jumper('x', 0, "foo"), 'n', 0, 0)<CR>
+nnoremap <silent> ,f :<C-u>call <SID>JumpToLastXccurrence(<SID>Jumper('x', 0, "foo"), 'n', 0, 0)<CR>
+
+> backward to last Z
+nnoremap <silent> ,f :<C-u>call <SID>JumpToLast|ccurrence(<SID>Jumper('x', 0, "foo"), 'n', 0, 0)<CR>
+nnoremap <silent> ,f :<C-u>call <SID>JumpToLastOccurrence(<SID>Jumper('x', 0, "foo"), 'n', 0, 0)<CR>
+nnoremap <silent> ,f :<C-u>call <SID>JumpToLastXccurrence(<SID>Jumper('x', 0, "foo"), 'n', 0, 0)<CR>
+nnoremap <silent> ,f :<C-u>call <SID>JumpToLastXccurrence(<SID>Jumper('x', 0, "foo"), 'n', 0, 0)<CR>
+
+> backward until last Z
+nnoremap <silent> ,f :<C-u>call <SID>JumpToLast|ccurrence(<SID>Jumper('x', 0, "foo"), 'n', 0, 0)<CR>
+nnoremap <silent> ,f :<C-u>call <SID>JumpToLastOccurrence(<SID>Jumper('x', 0, "foo"), 'n', 0, 0)<CR>
+nnoremap <silent> ,f :<C-u>call <SID>JumpToLastXccurrence(<SID>Jumper('x', 0, "foo"), 'n', 0, 0)<CR>
+nnoremap <silent> ,f :<C-u>call <SID>JumpToLastXccurrence(<SID>Jumper('x', 0, "foo"), 'n', 0, 0)<CR>
