@@ -2,6 +2,7 @@
 "
 " DEPENDENCIES:
 "   - ingo/motion/helper.vim autoload script
+"   - ingo/motion/omap.vim autoload script
 "   - ingo/query/get.vim autoload script
 "   - repeat.vim (vimscript #2136) autoload script (optional)
 "
@@ -11,6 +12,7 @@
 " Maintainer:	Ingo Karkat <ingo@karkat.de>
 "
 " REVISION	DATE		REMARKS
+"   1.20.006	15-Jan-2014	Use ingo#motion#omap#repeat().
 "   1.20.005	14-Jan-2014	ENH: Implement repeat of operator-pending
 "				mapping without re-querying the {char}. Since
 "				Vim 7.3.918, Vim will re-invoke the motion
@@ -107,7 +109,7 @@ function! s:Jump( count, char, mode, isBefore, isBackward, ... )
 	    endif
 	endif
 	if a:0 && a:mode ==# 'o'
-	    silent! call repeat#set(v:operator . a:1 . (v:operator ==# 'c' ? "\<Plug>JumpToLastOccurrenceReinsert" : ''), a:count)
+	    call ingo#motion#omap#repeat(a:1, v:operator, a:count)
 	endif
     endif
 
