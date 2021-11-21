@@ -1,0 +1,3 @@
+autoload/JumpToLastOccurrence.vim
+plugin/JumpToLastOccurrence.vim
+doc/JumpToLastOccurrence.txt
