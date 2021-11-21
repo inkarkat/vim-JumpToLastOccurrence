@@ -1,8 +1,9 @@
 " Test single jump to ends of the line. 
 
+call vimtest#SkipAndQuitIf(! vimtest#features#SupportsNormalWithCount(), 'Need support for :normal with count')
+
 source helpers/insertAndJump.vim
 
-let g:count = 1
 call VerifyModes('', ',f>', 'forward to last >')
 call VerifyModes('', ',t>', 'forward until last >')
 call VerifyModes('', ',Fn', 'backward to last n')
