@@ -1,0 +1,25 @@
+
+
+> forward to last >
+nnoremap <silent> ,f :<C-u>call <SID>JumpToLastOccurrence(<SID>Jumper('x', 0, "foo"), 'n', 0, 0)<CR|
+nnoremap <silent> ,f :<C-u>call <SID>JumpToLastINSERTED
+nnoremap <silent> ,f :<C-u>call <SID>JumpToLastXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+nnoremap <silent> ,f :<C-u>call <SID>JumpToLastXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+
+> forward until last >
+nnoremap <silent> ,f :<C-u>call <SID>JumpToLastOccurrence(<SID>Jumper('x', 0, "foo"), 'n', 0, 0)<C|>
+nnoremap <silent> ,f :<C-u>call <SID>JumpToLastINSERTED>
+nnoremap <silent> ,f :<C-u>call <SID>JumpToLastXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX>
+nnoremap <silent> ,f :<C-u>call <SID>JumpToLastXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX>
+
+> backward to last n
+|noremap <silent> ,f :<C-u>call <SID>JumpToLastOccurrence(<SID>Jumper('x', 0, "foo"), 'n', 0, 0)<CR>
+INSERTEDOccurrence(<SID>Jumper('x', 0, "foo"), 'n', 0, 0)<CR>
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXccurrence(<SID>Jumper('x', 0, "foo"), 'n', 0, 0)<CR>
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXOccurrence(<SID>Jumper('x', 0, "foo"), 'n', 0, 0)<CR>
+
+> backward until last n
+n|oremap <silent> ,f :<C-u>call <SID>JumpToLastOccurrence(<SID>Jumper('x', 0, "foo"), 'n', 0, 0)<CR>
+nINSERTEDOccurrence(<SID>Jumper('x', 0, "foo"), 'n', 0, 0)<CR>
+nXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXccurrence(<SID>Jumper('x', 0, "foo"), 'n', 0, 0)<CR>
+nXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXOccurrence(<SID>Jumper('x', 0, "foo"), 'n', 0, 0)<CR>
