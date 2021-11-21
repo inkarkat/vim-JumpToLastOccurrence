@@ -9,6 +9,8 @@
 " Maintainer:	Ingo Karkat <ingo@karkat.de>
 "
 " REVISION	DATE		REMARKS
+"   1.20.005	15-Jan-2014	Remove <Plug>JumpToLastOccurrenceReinsert
+"				special mapping; now proved by the ingo-library.
 "   1.20.004	14-Jan-2014	ENH: Implement repeat of operator-pending
 "				mapping without re-querying the {char}.
 "				Define an additional
@@ -73,11 +75,6 @@ endfunction
 
 call s:CreateMotionMappings()
 delfunction s:CreateMotionMappings
-
-" This is for the special repeat of a "c" command, to insert the last entered
-" text and leave insert mode. We define a :noremap so that any user mappings do
-" not affect this.
-inoremap <Plug>JumpToLastOccurrenceReinsert <C-r>.<Esc>
 
 let &cpo = s:save_cpo
 unlet s:save_cpo
