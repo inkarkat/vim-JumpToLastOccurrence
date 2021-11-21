@@ -29,7 +29,7 @@ would be a short c,f/ to jump to the last slash in the line.
 
 SEE ALSO								     *
 
-- The |JumpToVerticalOccurrence.vim| plugin (vimscript #0000) implement
+- The |JumpToVerticalOccurrence.vim| plugin (vimscript #4841) implements
   variations of |f| / |F| that move vertically across lines, restricted to the
   same screen column as the cursor.
 
@@ -120,10 +120,11 @@ IDEAS						  *JumpToLastOccurrence-ideas*
 ==============================================================================
 HISTORY						*JumpToLastOccurrence-history*
 
-1.20	RELEASEME
+1.20	03-Apr-2014
 - ENH: Implement repeat of operator-pending mapping without re-querying the
   {char}. This requires the repeat.vim plugin, version 1.1 or higher.
-- Add dependency to ingo-library (vimscript #4433).
+- Add dependency to ingo-library (vimscript #4433). *** You need to separately
+  install ingo-library (vimscript #4433) version 1.016 (or higher)! ***
 
 1.11	15-Sep-2012
 Also handle move to the buffer's very last character in operator-pending mode.
