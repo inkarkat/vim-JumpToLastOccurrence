@@ -1,0 +1,17 @@
+
+
+> forward to last 0
+nnoremap <silent> ,f :<C-u>call <SID>JumpToLast)<CR>
+nnoremap <silent> ,f :<C-u>call <SID>JumpToLastINSERTED)<CR>
+
+> forward until last 0
+nnoremap <silent> ,f :<C-u>call <SID>JumpToLast0)<CR>
+nnoremap <silent> ,f :<C-u>call <SID>JumpToLastINSERTED0)<CR>
+
+> backward to last t
+nnoremap <silenOccurrence(<SID>Jumper('x', 0, "foo"), 'n', 0, 0)<CR>
+nnoremap <silenINSERTEDOccurrence(<SID>Jumper('x', 0, "foo"), 'n', 0, 0)<CR>
+
+> backward until last t
+nnoremap <silentOccurrence(<SID>Jumper('x', 0, "foo"), 'n', 0, 0)<CR>
+nnoremap <silentINSERTEDOccurrence(<SID>Jumper('x', 0, "foo"), 'n', 0, 0)<CR>
